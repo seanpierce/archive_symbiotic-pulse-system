@@ -1,17 +1,17 @@
 <template>
   <div class="synth">
-	<VCO />
+	<Voice />
   </div>
 </template>
 
 <script>
 /* eslint-disable */ 
-import VCO from './modules/VCO.vue'
+import Voice from './modules/Voice.vue'
 
 export default {
   name: 'Synth',
   components: {
-	VCO
+	Voice
   },
   props: {
   },
