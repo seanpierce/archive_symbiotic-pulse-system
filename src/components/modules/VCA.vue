@@ -17,18 +17,18 @@
 <script>
 /* eslint-disable */ 
 export default {
-	name: 'VCO',
+	name: 'VCA',
 	data: function() {
 		return {
 			loaded: false,
-			gain: null,
+			gain: 100,
 			vca: null
 		}
 	},
 	methods: {
 		setData()  {
-			this.gain = this.$parent.gain
 			this.vca = this.$parent.vca
+			this.vca.gain.value = 1;
 			this.loaded = true
 		},
 		updateGain(event) {

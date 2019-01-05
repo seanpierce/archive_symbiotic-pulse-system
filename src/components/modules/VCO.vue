@@ -13,7 +13,7 @@
 				<div>
 					{{ frequency }}
 				</div>
-				<input type="range" min="0" max="1360" step="1" v-model="vco.frequency.value" v-on:input="updateFrequency($event)" />
+				<input type="range" min="0" max="1760" step="1" v-model="vco.frequency.value" v-on:input="updateFrequency($event)" />
 			</div>
 		</div>
 	</div>
@@ -26,17 +26,17 @@ export default {
 	data: function() {
 		return {
 			loaded: false,
-			frequency: null,
-			wave: null,
+			frequency: 220,
+			wave: 'square',
 			vco: null
 		}
 	},
 	methods: {
 		setData()  {
-			this.frequency = this.$parent.frequency
-			this.wave = this.$parent.wave
-			this.vco = this.$parent.vco
-			this.loaded = true
+			this.vco = this.$parent.vco;
+			this.vco.type = this.wave;
+			this.vco.frequency.value = this.frequency;
+			this.loaded = true;
 		},
 		updateFrequency(event) {
 			var value = event.target.value;
