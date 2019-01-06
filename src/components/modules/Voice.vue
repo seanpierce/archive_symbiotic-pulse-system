@@ -1,5 +1,5 @@
 <template>
-	<div class="voice" v-if="vco" :style="style">
+	<div class="voice" v-if="vco">
 		<VCO />
 		<VCF />
 		<VCA />
@@ -23,8 +23,7 @@ export default {
 		EG
 	},
 	props: [
-		'number',
-		'color'
+		'number'
 	],
 	data: function() {
 		return {
@@ -129,16 +128,6 @@ export default {
 		},
 	},
 	computed: {
-		style() {
-			return {
-				'border': 'solid 3px #' + this.color,
-			}
-		},
-		moduleStyle() {
-			return {
-				'border-bottom': 'solid 1px #' + this.color
-			}
-		}
     },
 	mounted: function() {
 		this.createVoice();
