@@ -1,5 +1,5 @@
 <template>
-	<div class="voice" v-if="vco">
+	<div class="voice" v-if="vco" :style="style">
 		<VCO />
 		<VCF />
 		<VCA />
@@ -22,6 +22,10 @@ export default {
 		VCF,
 		EG
 	},
+	props: [
+		'number',
+		'color'
+	],
 	data: function() {
 		return {
 			vco: null,
@@ -38,7 +42,8 @@ export default {
 			repeaterVca: null,
 			repeater: null,
 			attack: 0,
-			release: 0.1
+			release: 0.1,
+			division: null,
 		};
 	},
 	methods: {	
@@ -88,12 +93,6 @@ export default {
 			this.lfos.vcf.start();
 			this.lfos.vca.start();
 		},
-		startVoiceHold() {
-			this.vco.start();
-		},
-		stopVoice() {
-			this.vco.stop();
-		},
 		trigger() {
 			if (this.repeater === null) {
 				var releaseGain = 1
@@ -107,14 +106,40 @@ export default {
 			this.repeater = setTimeout(() => {
 				this.trigger();
 				this.playStep();
-			}, this.$root.milliSeconds);
+			}, this.getClock());
 		},
 		stopRepeater() {
 			clearInterval(this.repeater);
 			this.repeater = null;
 			this.trigger();
-		}
+		},
+		getClock() {
+			var clock = this.$root.milliSeconds;
+			switch(this.division) {
+				case 'eigth':
+					clock = clock / 2;
+					break;
+				case 'sixteenth':
+					clock = clock / 4;
+					break;
+				default: // quarter
+					clock = clock;
+			}
+			return clock;
+		},
 	},
+	computed: {
+		style() {
+			return {
+				'border': 'solid 3px #' + this.color,
+			}
+		},
+		moduleStyle() {
+			return {
+				'border-bottom': 'solid 1px #' + this.color
+			}
+		}
+    },
 	mounted: function() {
 		this.createVoice();
 		this.playStep();
