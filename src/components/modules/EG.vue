@@ -1,6 +1,6 @@
 <template>
 	<div v-if="$parent.vca">
-		<div class="module" :style="$parent.moduleStyle">
+		<div class="module">
 			<div class="module-left">
 				<div class="module-title">
 					ATTACK
@@ -9,7 +9,13 @@
 					<div>
 						{{ displayAttack }}
 					</div>
-					<input type="range" min="0" max="1" step="0.01" v-model="attack" v-on:input="updateAttack($event)" />
+					<input 
+						type="range" 
+						min="0" 
+						max="1" 
+						step="0.01" 
+						v-model="attack" 
+						v-on:input="updateAttack($event)" />
 				</div>
 			</div>
 			<div class="module-right">
@@ -27,10 +33,10 @@
 				TRIG
 			</div>
 			<div class="module-controls">
-				<input type="radio" :name="'trigger-' + $parent.number" value="hold" v-model="trigger" v-on:change="updateTrig()"> Hold
-				<input type="radio" :name="'trigger-' + $parent.number" value="quarter" v-model="trigger" v-on:change="updateTrig()"> 1/4
-				<input type="radio" :name="'trigger-' + $parent.number" value="eigth" v-model="trigger" v-on:change="updateTrig()"> 1/8
-				<input type="radio" :name="'trigger-' + $parent.number" value="sixteenth" v-model="trigger" v-on:change="updateTrig()"> 1/16
+				<span class="option" v-bind:class="{'selectedOption': trigger === 'hold'}" v-on:click="updateTrig('hold')">Hold</span>
+				<span class="option" v-bind:class="{'selectedOption': trigger === 'quarter'}" v-on:click="updateTrig('quarter')">1/4</span>
+				<span class="option" v-bind:class="{'selectedOption': trigger === 'eigth'}" v-on:click="updateTrig('eigth')">1/8</span>
+				<span class="option" v-bind:class="{'selectedOption': trigger === 'sixteenth'}" v-on:click="updateTrig('sixteenth')">1/16</span>
 			</div>
 		</div>
 	</div>
@@ -47,7 +53,8 @@ export default {
 			release: null,
 			displayAttack: null,
 			displayRelease: null,
-			trigger: 'quarter'
+			trigger: 'quarter',
+			colorrr: 'red'
 		}
 	},
 	methods: {
@@ -65,7 +72,8 @@ export default {
 			this.$parent.release = this.release;
 			this.displayRelease = Math.round(this.release * 10);
 		},
-		updateTrig() {
+		updateTrig(trigger) {
+			this.trigger = trigger;
 			if (this.trigger === 'hold')
 				this.setHold();
 			else 
@@ -82,11 +90,21 @@ export default {
 	},
 	mounted: function() {
 		this.setData();
-		this.updateTrig();
+		this.updateTrig('quarter');
 	},
 }
 </script>
 
 <style scoped>
+.module {
+	border: none;
+}
 
+span.option {
+	padding: 8px;
+	cursor: pointer;
+}
+span.selectedOption {
+	border: solid 1px lightgray;
+}
 </style>

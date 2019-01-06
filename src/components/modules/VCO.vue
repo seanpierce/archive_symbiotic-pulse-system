@@ -1,18 +1,18 @@
 <template>
 	<div v-if="loaded">
-		<div class="module" :style="$parent.moduleStyle">
+		<div class="module">
 			<div class="module-left">
 				<div class="module-title">
 					VCO
 				</div>
 				<div class="module-controls">
-					<input type="radio" :name="'waveshape-' + $parent.number" value="sine" v-model="wave" v-on:change="updateWaveShape()"> Sine
-					<input type="radio" :name="'waveshape-' + $parent.number" value="square" v-model="wave" v-on:change="updateWaveShape()"> Square
-					<input type="radio" :name="'waveshape-' + $parent.number" value="sawtooth" v-model="wave" v-on:change="updateWaveShape()"> Saw
+					<img src="../../assets/sine.png" alt="sine wave" class="wave" v-bind:class="{'selectedWave': wave === 'sine'}" v-on:click="updateWaveShape('sine')">
+					<img src="../../assets/square.png" alt="square wave" class="wave" v-bind:class="{'selectedWave': wave === 'square'}" v-on:click="updateWaveShape('square')">
+					<img src="../../assets/saw.png" alt="saw wave" class="wave" v-bind:class="{'selectedWave': wave === 'sawtooth'}" v-on:click="updateWaveShape('sawtooth')">
 				</div>
 				<div class="module-controls">
 					<div>
-						{{ frequency }}
+						<div class="label">FREQ</div> {{ frequency }}
 					</div>
 					<input type="range" min="0" max="1760" step="1" v-model="vco.frequency.value" v-on:input="updateFrequency($event)" />
 				</div>
@@ -22,19 +22,19 @@
 					LFO
 				</div>
 				<div class="module-controls">
-					<input type="radio" :name="'lfo-vco-waveshape-' + $parent.number" value="sine" v-model="lfo.wave" v-on:change="updateLFOWaveShape()"> Sine
-					<input type="radio" :name="'lfo-vco-waveshape-' + $parent.number" value="square" v-model="lfo.wave" v-on:change="updateLFOWaveShape()"> Square
-					<input type="radio" :name="'lfo-vco-waveshape-' + $parent.number" value="sawtooth" v-model="lfo.wave" v-on:change="updateLFOWaveShape()"> Saw
+					<img src="../../assets/sine.png" alt="sine wave" class="wave" v-bind:class="{'selectedWave': lfo.wave === 'sine'}" v-on:click="updateLFOWaveShape('sine')">
+					<img src="../../assets/square.png" alt="square wave" class="wave" v-bind:class="{'selectedWave': lfo.wave === 'square'}" v-on:click="updateLFOWaveShape('square')">
+					<img src="../../assets/saw.png" alt="saw wave" class="wave" v-bind:class="{'selectedWave': lfo.wave === 'sawtooth'}" v-on:click="updateLFOWaveShape('sawtooth')">
 				</div>
 				<div class="module-controls">
 					<div>
-						{{ lfo.frequency }}
+						<div class="label">FREQ</div> {{ lfo.frequency }}
 					</div>
 					<input type="range" min="0" max="100" step="0.01" v-model="lfo.vco.frequency.value" v-on:input="updateLFOFrequency($event)" />
 				</div>
 				<div class="module-controls">
 					<div>
-						{{ lfo.gain }}
+						<div class="label">GAIN</div> {{ lfo.gain }}
 					</div>
 					<input type="range" min="0" max="100" step="0.1" v-model="lfo.vca.gain.value" v-on:input="updateLFOGain($event)" />
 				</div>
@@ -73,7 +73,8 @@ export default {
 			var value = event.target.value;
 			this.frequency = value;
 		},
-		updateWaveShape() {
+		updateWaveShape(wave) {
+			this.wave = wave;
 			this.vco.type = this.wave;
 		},
 
@@ -93,7 +94,8 @@ export default {
 			var value = event.target.value;
 			this.lfo.gain = Math.round(value * 1);
 		},
-		updateLFOWaveShape() {
+		updateLFOWaveShape(wave) {
+			this.lfo.wave = wave;
 			this.lfo.vco.type = this.lfo.wave;
 		},
 	},
@@ -105,5 +107,4 @@ export default {
 </script>
 
 <style scoped>
-
 </style>
