@@ -1,6 +1,6 @@
 <template>
 	<div v-if="$parent.vca">
-		<div class="module">
+		<div class="module" :style="$parent.moduleStyle">
 			<div class="module-left">
 				<div class="module-title">
 					ATTACK
@@ -27,8 +27,10 @@
 				TRIG
 			</div>
 			<div class="module-controls">
-				<input type="radio" name="trigger" value="hold" v-model="trigger" v-on:change="updateTrig()"> Hold
-				<input type="radio" name="trigger" value="sixteenth" v-model="trigger" v-on:change="updateTrig()"> 1/16
+				<input type="radio" :name="'trigger-' + $parent.number" value="hold" v-model="trigger" v-on:change="updateTrig()"> Hold
+				<input type="radio" :name="'trigger-' + $parent.number" value="quarter" v-model="trigger" v-on:change="updateTrig()"> 1/4
+				<input type="radio" :name="'trigger-' + $parent.number" value="eigth" v-model="trigger" v-on:change="updateTrig()"> 1/8
+				<input type="radio" :name="'trigger-' + $parent.number" value="sixteenth" v-model="trigger" v-on:change="updateTrig()"> 1/16
 			</div>
 		</div>
 	</div>
@@ -45,7 +47,7 @@ export default {
 			release: null,
 			displayAttack: null,
 			displayRelease: null,
-			trigger: 'hold'
+			trigger: 'quarter'
 		}
 	},
 	methods: {
@@ -70,16 +72,18 @@ export default {
 				this.setDivider()
 		},
 		setHold() {
-			console.log('hold');
 			this.$parent.stopRepeater();
 		},
 		setDivider() {
-			console.log(this.trigger)
+			this.$parent.division = this.trigger;
+			if (this.$parent.repeater === null)
+				this.$parent.playStep()
 		}
 	},
 	mounted: function() {
 		this.setData();
-	}
+		this.updateTrig();
+	},
 }
 </script>
 

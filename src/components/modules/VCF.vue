@@ -1,13 +1,13 @@
 <template>
 	<div v-if="loaded">
-		<div class="module">
+		<div class="module" :style="$parent.moduleStyle">
 			<div class="module-left">
 				<div class="module-title">
 					VCF
 				</div>
 				<div class="module-controls">
-					<input type="radio" name="filterType" value="lowpass" v-model="type" v-on:change="updateFilterType()"> Lowpass
-					<input type="radio" name="filterType" value="highpass" v-model="type" v-on:change="updateFilterType()"> Highpass
+					<input type="radio" :name="'filterType-' + $parent.number" value="lowpass" v-model="type" v-on:change="updateFilterType()"> Lowpass
+					<input type="radio" :name="'filterType-' + $parent.number" value="highpass" v-model="type" v-on:change="updateFilterType()"> Highpass
 				</div>
 				<div class="module-controls">
 					<div>
@@ -27,9 +27,9 @@
 					LFO
 				</div>
 				<div class="module-controls">
-					<input type="radio" name="lfo-vcf-waveshape" value="sine" v-model="lfo.wave" v-on:change="updateLFOWaveShape()"> Sine
-					<input type="radio" name="lfo-vcf-waveshape" value="square" v-model="lfo.wave" v-on:change="updateLFOWaveShape()"> Square
-					<input type="radio" name="lfo-vcf-waveshape" value="sawtooth" v-model="lfo.wave" v-on:change="updateLFOWaveShape()"> Saw
+					<input type="radio" :name="'lfo-vcf-waveshape-' + $parent.number" value="sine" v-model="lfo.wave" v-on:change="updateLFOWaveShape()"> Sine
+					<input type="radio" :name="'lfo-vcf-waveshape-' + $parent.number" value="square" v-model="lfo.wave" v-on:change="updateLFOWaveShape()"> Square
+					<input type="radio" :name="'lfo-vcf-waveshape-' + $parent.number" value="sawtooth" v-model="lfo.wave" v-on:change="updateLFOWaveShape()"> Saw
 				</div>
 				<div class="module-controls">
 					<div>

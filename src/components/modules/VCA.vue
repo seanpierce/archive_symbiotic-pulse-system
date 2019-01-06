@@ -1,6 +1,6 @@
 <template>
 	<div v-if="loaded">
-		<div class="module">
+		<div class="module" :style="$parent.moduleStyle">
 			<div class="module-left">
 				<div class="module-title">
 					VCA
@@ -17,9 +17,9 @@
 					LFO
 				</div>
 				<div class="module-controls">
-					<input type="radio" name="lfo-vca-waveshape" value="sine" v-model="lfo.wave" v-on:change="updateLFOWaveShape()"> Sine
-					<input type="radio" name="lfo-vca-waveshape" value="square" v-model="lfo.wave" v-on:change="updateLFOWaveShape()"> Square
-					<input type="radio" name="lfo0-vca-waveshape" value="sawtooth" v-model="lfo.wave" v-on:change="updateLFOWaveShape()"> Saw
+					<input type="radio" :name="'lfo-vca-waveshape-' + $parent.number" value="sine" v-model="lfo.wave" v-on:change="updateLFOWaveShape()"> Sine
+					<input type="radio" :name="'lfo-vca-waveshape-' + $parent.number" value="square" v-model="lfo.wave" v-on:change="updateLFOWaveShape()"> Square
+					<input type="radio" :name="'lfo-vca-waveshape-' + $parent.number" value="sawtooth" v-model="lfo.wave" v-on:change="updateLFOWaveShape()"> Saw
 				</div>
 				<div class="module-controls">
 					<div>
