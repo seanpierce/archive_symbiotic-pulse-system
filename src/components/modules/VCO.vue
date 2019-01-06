@@ -47,10 +47,13 @@
 /* eslint-disable */ 
 export default {
 	name: 'VCO',
+	props: [
+		'note'
+	],
 	data: function() {
 		return {
 			loaded: false,
-			frequency: 220,
+			frequency: this.note,
 			wave: 'square',
 			vco: null,
 			lfo: {

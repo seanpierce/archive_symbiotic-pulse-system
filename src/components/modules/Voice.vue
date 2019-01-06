@@ -1,9 +1,9 @@
 <template>
 	<div class="voice" v-if="vco">
-		<VCO />
+		<VCO :note="note" />
 		<VCF />
 		<VCA />
-		<EG />
+		<EG :trig="trig" />
 	</div>
 </template>
 
@@ -23,7 +23,9 @@ export default {
 		EG
 	},
 	props: [
-		'number'
+		'number',
+		'note',
+		'trig'
 	],
 	data: function() {
 		return {

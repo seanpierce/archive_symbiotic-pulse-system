@@ -46,6 +46,9 @@
 /* eslint-disable */ 
 export default {
 	name: 'EG',
+	props: [
+		'trig'
+	],
 	data: function() {
 		return {
 			loaded: false,
@@ -53,7 +56,7 @@ export default {
 			release: null,
 			displayAttack: null,
 			displayRelease: null,
-			trigger: 'quarter',
+			trigger: this.trig,
 			colorrr: 'red'
 		}
 	},
@@ -90,7 +93,7 @@ export default {
 	},
 	mounted: function() {
 		this.setData();
-		this.updateTrig('quarter');
+		this.updateTrig(this.trig);
 	},
 }
 </script>

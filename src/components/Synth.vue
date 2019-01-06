@@ -1,7 +1,7 @@
 <template>
   <div class="synth">
-	<Voice number="1" />
-	<Voice number="2" />
+	<Voice number="1" note="220" trig="quarter" />
+	<Voice number="2" note="440" trig="eigth" />
 	<div class="globals">
 		<BPM />
 	</div>

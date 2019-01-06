@@ -1,6 +1,11 @@
 <template>
 	<div id="app">
-		<div v-if="!startSynthy" v-on:click="startSynthy = true">Start</div>
+		<div id="title" v-if="!startSynthy">
+			<h1>SYMBIOTIC PULSE SYSTEM</h1>
+			<div v-on:click="startSynthy = true" id="start">
+				START
+			</div>
+		</div>
 		<Synth v-if="startSynthy" />
 	</div>
 </template>
@@ -34,6 +39,21 @@ export default {
 #app {
 	font-family: Arial, sans-serif;
 	color: #333;
+}
+#title {
+	width: 600px;
+	text-align: center;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+#start {
+	display: inline-block;
+	width: auto;
+	padding: 8px;
+	cursor: pointer;
+	border: solid 1px #333;
 }
 .voice, .globals {
 	border: solid 3px #333;
