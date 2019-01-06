@@ -4,6 +4,8 @@
 		<VCF />
 		<VCA />
 		<LFOVCO />
+		<LFOVCF />
+		<LFOVCA />
 	</div>
 </template>
 
@@ -13,6 +15,8 @@ import VCO from './VCO.vue';
 import VCA from './VCA.vue';
 import VCF from './VCF.vue';
 import LFOVCO from './LFOVCO.vue';
+import LFOVCF from './LFOVCF.vue';
+import LFOVCA from './LFOVCA.vue';
 
 export default {
 	name: 'Voice',
@@ -20,7 +24,9 @@ export default {
 		VCO,
 		VCA,
 		VCF,
-		LFOVCO
+		LFOVCO,
+		LFOVCF,
+		LFOVCA
 	},
 	data: function() {
 		return {
@@ -30,7 +36,9 @@ export default {
 				vco: null,
 				vcoGain: null,
 				vcf: null,
-				vca:  null
+				vcfGain: null,
+				vca:  null,
+				vcaGain: null
 			},
 			vca: null
 		};
@@ -51,10 +59,19 @@ export default {
 			// create lfos
 			this.lfos.vcoGain = context.createGain();
 			this.lfos.vco = context.createOscillator();
+			this.lfos.vcfGain = context.createGain();
+			this.lfos.vcf = context.createOscillator();
+			this.lfos.vcaGain = context.createGain();
+			this.lfos.vca = context.createOscillator();
 
 			// connect lfos.vco to vco
+			// connect lfos.vcf to vcf
 			this.lfos.vco.connect(this.lfos.vcoGain);
 			this.lfos.vcoGain.connect(this.vco.frequency);
+			this.lfos.vcf.connect(this.lfos.vcfGain);
+			this.lfos.vcfGain.connect(this.vcf.frequency);
+			this.lfos.vca.connect(this.lfos.vcaGain);
+			this.lfos.vcaGain.connect(this.vca.gain);
 
 			// connect output of vco to input of vcf
 			// connect output of vcf into input of vca
@@ -66,6 +83,8 @@ export default {
 			// start oscillator and lfos
 			this.vco.start();
 			this.lfos.vco.start();
+			this.lfos.vcf.start();
+			this.lfos.vca.start();
 		},
 	},
 	mounted: function() {

@@ -2,12 +2,12 @@
 	<div v-if="loaded">
 		<div class="module">
 			<div class="module-title">
-				LFO > VCO
+				LFO > VCA
 			</div>
 			<div class="module-controls">
-				<input type="radio" name="lfo-vco-waveshape" value="sine" v-model="wave" v-on:change="updateWaveShape()"> Sine
-				<input type="radio" name="lfo-vco-waveshape" value="square" v-model="wave" v-on:change="updateWaveShape()"> Square
-				<input type="radio" name="lfo-vco-waveshape" value="sawtooth" v-model="wave" v-on:change="updateWaveShape()"> Saw
+				<input type="radio" name="lfo-vca-waveshape" value="sine" v-model="wave" v-on:change="updateWaveShape()"> Sine
+				<input type="radio" name="lfo-vca-waveshape" value="square" v-model="wave" v-on:change="updateWaveShape()"> Square
+				<input type="radio" name="lfo0-vca-waveshape" value="sawtooth" v-model="wave" v-on:change="updateWaveShape()"> Saw
 			</div>
 			<div class="module-controls">
 				<div>
@@ -19,7 +19,7 @@
 				<div>
 					{{ gain }}
 				</div>
-				<input type="range" min="0" max="100" step="0.1" v-model="vca.gain.value" v-on:input="updateGain($event)" />
+				<input type="range" min="0" max="1" step="0.01" v-model="vca.gain.value" v-on:input="updateGain($event)" />
 			</div>
 		</div>
 	</div>
@@ -28,7 +28,7 @@
 <script>
 /* eslint-disable */ 
 export default {
-	name: 'LFOVCO',
+	name: 'LFOVCA',
 	data: function() {
 		return {
 			loaded: false,
@@ -41,8 +41,8 @@ export default {
 	},
 	methods: {
 		setData()  {
-			this.vco = this.$parent.lfos.vco;
-			this.vca = this.$parent.lfos.vcoGain;
+			this.vco = this.$parent.lfos.vca;
+			this.vca = this.$parent.lfos.vcaGain;
 			this.vco.type = this.wave;
 			this.vco.frequency.value = this.frequency;
 			this.vca.gain.value = this.gain;
@@ -54,7 +54,7 @@ export default {
 		},
 		updateGain(event) {
 			var value = event.target.value;
-			this.gain = Math.round(value * 1);
+			this.gain = Math.round(value * 100);
 		},
 		updateWaveShape() {
 			this.vco.type = this.wave;

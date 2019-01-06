@@ -2,12 +2,12 @@
 	<div v-if="loaded">
 		<div class="module">
 			<div class="module-title">
-				LFO > VCO
+				LFO > VCF
 			</div>
 			<div class="module-controls">
-				<input type="radio" name="lfo-vco-waveshape" value="sine" v-model="wave" v-on:change="updateWaveShape()"> Sine
-				<input type="radio" name="lfo-vco-waveshape" value="square" v-model="wave" v-on:change="updateWaveShape()"> Square
-				<input type="radio" name="lfo-vco-waveshape" value="sawtooth" v-model="wave" v-on:change="updateWaveShape()"> Saw
+				<input type="radio" name="lfo-vcf-waveshape" value="sine" v-model="wave" v-on:change="updateWaveShape()"> Sine
+				<input type="radio" name="lfo-vcf-waveshape" value="square" v-model="wave" v-on:change="updateWaveShape()"> Square
+				<input type="radio" name="lfo0-vcf-waveshape" value="sawtooth" v-model="wave" v-on:change="updateWaveShape()"> Saw
 			</div>
 			<div class="module-controls">
 				<div>
@@ -28,7 +28,7 @@
 <script>
 /* eslint-disable */ 
 export default {
-	name: 'LFOVCO',
+	name: 'LFOVCF',
 	data: function() {
 		return {
 			loaded: false,
@@ -41,8 +41,8 @@ export default {
 	},
 	methods: {
 		setData()  {
-			this.vco = this.$parent.lfos.vco;
-			this.vca = this.$parent.lfos.vcoGain;
+			this.vco = this.$parent.lfos.vcf;
+			this.vca = this.$parent.lfos.vcfGain;
 			this.vco.type = this.wave;
 			this.vco.frequency.value = this.frequency;
 			this.vca.gain.value = this.gain;
