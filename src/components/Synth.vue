@@ -1,6 +1,7 @@
 <template>
   <div class="synth">
-	<Voice />
+	<Voice number="1" color="7CC6FE" />
+	<Voice number="2" color="FFC09F" />
 	<div class="globals">
 		<BPM />
 	</div>
