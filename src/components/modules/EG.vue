@@ -27,8 +27,8 @@
 				TRIG
 			</div>
 			<div class="module-controls">
-				<input type="radio" name="trigger" value="hold" v-model="trigger"> Hold
-				<input type="radio" name="trigger" value="sixteenth" v-model="trigger"> 1/16
+				<input type="radio" name="trigger" value="hold" v-model="trigger" v-on:change="updateTrig()"> Hold
+				<input type="radio" name="trigger" value="sixteenth" v-model="trigger" v-on:change="updateTrig()"> 1/16
 			</div>
 		</div>
 	</div>
@@ -62,6 +62,19 @@ export default {
 		updateRelease() {
 			this.$parent.release = this.release;
 			this.displayRelease = Math.round(this.release * 10);
+		},
+		updateTrig() {
+			if (this.trigger === 'hold')
+				this.setHold();
+			else 
+				this.setDivider()
+		},
+		setHold() {
+			console.log('hold');
+			this.$parent.stopRepeater();
+		},
+		setDivider() {
+			console.log(this.trigger)
 		}
 	},
 	mounted: function() {

@@ -29,7 +29,7 @@ export default {
 	font-family: Arial, sans-serif;
 	color: #333;
 }
-.voice {
+.voice, .globals {
 	border: solid 1px #333;
 	padding: 10px;
 	display: inline-block;

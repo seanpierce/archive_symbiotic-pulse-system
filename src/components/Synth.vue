@@ -1,7 +1,9 @@
 <template>
   <div class="synth">
 	<Voice />
-	<BPM />
+	<div class="globals">
+		<BPM />
+	</div>
   </div>
 </template>
 

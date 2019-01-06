@@ -55,7 +55,6 @@ export default {
 			// create vcas
 			this.vca = context.createGain();
 			this.repeaterVCA = context.createGain();
-			this.repeaterVCA.gain.value = 1;
 
 			// create lfos
 			this.lfos.vcoGain = context.createGain();
@@ -96,8 +95,13 @@ export default {
 			this.vco.stop();
 		},
 		trigger() {
+			if (this.repeater === null) {
+				var releaseGain = 1
+			} else {
+				releaseGain = 0
+			}
 			this.repeaterVCA.gain.setTargetAtTime(1, this.context.currentTime, parseFloat(this.attack));
-			this.repeaterVCA.gain.setTargetAtTime(0, this.context.currentTime + parseFloat(this.attack), this.release);
+			this.repeaterVCA.gain.setTargetAtTime(releaseGain, this.context.currentTime + parseFloat(this.attack), this.release);
 		},
 		playStep() {
 			this.repeater = setTimeout(() => {
@@ -107,6 +111,8 @@ export default {
 		},
 		stopRepeater() {
 			clearInterval(this.repeater);
+			this.repeater = null;
+			this.trigger();
 		}
 	},
 	mounted: function() {
