@@ -1,17 +1,20 @@
 <template>
   <div class="synth">
 	<Voice />
+	<BPM />
   </div>
 </template>
 
 <script>
 /* eslint-disable */ 
 import Voice from './modules/Voice.vue'
+import BPM from './modules/BPM.vue'
 
 export default {
   name: 'Synth',
   components: {
-	Voice
+	Voice,
+	BPM
   },
   props: {
   },

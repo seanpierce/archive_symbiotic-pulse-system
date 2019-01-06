@@ -3,9 +3,7 @@
 		<VCO />
 		<VCF />
 		<VCA />
-		<LFOVCO />
-		<LFOVCF />
-		<LFOVCA />
+		<EG />
 	</div>
 </template>
 
@@ -14,9 +12,7 @@
 import VCO from './VCO.vue';
 import VCA from './VCA.vue';
 import VCF from './VCF.vue';
-import LFOVCO from './LFOVCO.vue';
-import LFOVCF from './LFOVCF.vue';
-import LFOVCA from './LFOVCA.vue';
+import EG from './EG.vue';
 
 export default {
 	name: 'Voice',
@@ -24,9 +20,7 @@ export default {
 		VCO,
 		VCA,
 		VCF,
-		LFOVCO,
-		LFOVCF,
-		LFOVCA
+		EG
 	},
 	data: function() {
 		return {
@@ -40,12 +34,17 @@ export default {
 				vca:  null,
 				vcaGain: null
 			},
-			vca: null
+			vca: null,
+			repeaterVca: null,
+			repeater: null,
+			attack: 0,
+			release: 0.1
 		};
 	},
-	methods: {
-		createVCO() {
+	methods: {	
+		createVoice() {
 			var context = this.$parent.context;
+			this.context = context;
 
 			// create vco
 			this.vco = context.createOscillator();
@@ -53,8 +52,10 @@ export default {
 			// create vcf
 			this.vcf = context.createBiquadFilter();
 			
-			// create vca
+			// create vcas
 			this.vca = context.createGain();
+			this.repeaterVCA = context.createGain();
+			this.repeaterVCA.gain.value = 1;
 
 			// create lfos
 			this.lfos.vcoGain = context.createGain();
@@ -66,6 +67,7 @@ export default {
 
 			// connect lfos.vco to vco
 			// connect lfos.vcf to vcf
+			// connect lfos.vca to vca
 			this.lfos.vco.connect(this.lfos.vcoGain);
 			this.lfos.vcoGain.connect(this.vco.frequency);
 			this.lfos.vcf.connect(this.lfos.vcfGain);
@@ -75,20 +77,41 @@ export default {
 
 			// connect output of vco to input of vcf
 			// connect output of vcf into input of vca
-			// connect output of vca to destination
+			// connect output of vca to repeaterVca
 			this.vco.connect(this.vcf);
 			this.vcf.connect(this.vca);
-			this.vca.connect(context.destination);
+			this.vca.connect(this.repeaterVCA);
+			this.repeaterVCA.connect(context.destination);
 
-			// start oscillator and lfos
+			// start lfos
 			this.vco.start();
 			this.lfos.vco.start();
 			this.lfos.vcf.start();
 			this.lfos.vca.start();
 		},
+		startVoiceHold() {
+			this.vco.start();
+		},
+		stopVoice() {
+			this.vco.stop();
+		},
+		trigger() {
+			this.repeaterVCA.gain.setTargetAtTime(1, this.context.currentTime, parseFloat(this.attack));
+			this.repeaterVCA.gain.setTargetAtTime(0, this.context.currentTime + parseFloat(this.attack), this.release);
+		},
+		playStep() {
+			this.repeater = setTimeout(() => {
+				this.trigger();
+				this.playStep();
+			}, this.$root.milliSeconds);
+		},
+		stopRepeater() {
+			clearInterval(this.repeater);
+		}
 	},
 	mounted: function() {
-		this.createVCO();
+		this.createVoice();
+		this.playStep();
 	}
 }
 </script>

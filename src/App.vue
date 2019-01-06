@@ -33,11 +33,21 @@ export default {
 	border: solid 1px #333;
 	padding: 10px;
 	display: inline-block;
-	width: auto;
+	width: 400px;
 }
 .module {
 	margin: 1em auto;
 	border-bottom: solid 1px lightgray;
+	position: relative;
+}
+.module-left, .module-right {
+	width: 48%;
+	display: inline-block;
+	vertical-align: top;
+	margin-right: 2%;
+}
+.module-right::after {
+	clear: both;
 }
 .module input[type="range"] {
 	width: 100%;
