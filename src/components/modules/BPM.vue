@@ -7,7 +7,7 @@
 			<div>
 				{{ $root.bpm }}
 			</div>
-			<input type="range" min="1" max="420" step="1" v-model="$root.bpm" v-on:input="$root.setTempo($event)">
+			<input type="range" min="1" max="420" step="1" v-model="$root.bpm" v-on:input="setTempo($event)">
 		</div>
 	</div>
 </template>
@@ -20,6 +20,9 @@ export default {
 		}
 	},
 	methods: {
+		setTempo($event) {
+			this.$root.setTempo($event);
+		}
 	}	
 }
 </script>
