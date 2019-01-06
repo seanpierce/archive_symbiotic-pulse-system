@@ -34,6 +34,10 @@ export default {
 	padding: 10px;
 	display: inline-block;
 	width: 400px;
+	margin: 1em;
+}
+.globals {
+	display: block;
 }
 .module {
 	margin: 1em auto;
