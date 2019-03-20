@@ -3,6 +3,6 @@ SPS is a dual-voiced, analog-modeled synthesizer developed using VueJS. Leveragi
 
 Play SPS @ https://synth.seanpierce.us
 
-_Note: the web audio api is still working to implement compatability patches with many mobile devises._
+_Note: maintainers of the web audio api are still working to implement compatability patches for many mobile devises._
 
 <img src="https://user-images.githubusercontent.com/15679739/50743305-572f4c80-11d3-11e9-9275-ee16ab598e8c.png">
